@@ -1,0 +1,21 @@
+{
+  "name": "qax-automation-zombie-plus",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "scripts": {
+    "pw:headed": "npx playwright test --headed",
+    "pw:ui": "npx playwright test --ui",
+    "pw:debug": "npx playwright test --debug",
+    "pw:test": "npx playwright test"
+  },
+  "devDependencies": {
+    "@faker-js/faker": "^10.1.0",
+    "@playwright/test": "^1.56.1",
+    "@types/node": "^24.10.1"
+  }
+}
