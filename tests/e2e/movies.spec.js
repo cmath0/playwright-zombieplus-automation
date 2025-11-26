@@ -1,4 +1,5 @@
 const { test } = require('@playwright/test')
+const { executeSQL } = require('../support/database')
 
 const data = require('../support/fixtures/movies.json')
 
@@ -18,6 +19,8 @@ test.beforeEach(async ({ page }) => {
 
 test('deve poder cadastrar um novo filme', async ({ page }) => {
     const movie = data.create
+
+    await executeSQL(`DELETE FROM movies WHERE title = '${movie.title}'`)
     
     // precisa estar logado como ADM
     await loginPage.visit()
