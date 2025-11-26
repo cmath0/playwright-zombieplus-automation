@@ -6,6 +6,12 @@ export class Login {
         this.page = page
     }
 
+    async do(email, password, username) {
+        this.visit()
+        this.submit(email, password)
+        this.isLoggedIn(username)
+    }
+
     async visit() {
         await this.page.goto('http://localhost:3000/admin/login')
 
@@ -33,8 +39,8 @@ export class Login {
         await expect(alert).toHaveText(text)
     }
 
-    async isLoggedIn() {
-        await this.page.waitForLoadState('networkidle')
-        await expect(this.page).toHaveURL(/.*movies/)
+    async isLoggedIn(username) {
+        const loggedUser = this.page.locator('.logged-user')
+        await expect(loggedUser).toHaveText(`Olá, ${username}`)
     }
 }
