@@ -51,3 +51,23 @@ test('não deve cadastrar quando os campos obrigatórios não são preenchidos',
         'Campo obrigatório',
     ])
 })
+
+test('deve realizar busca pelo termo zumbi', async ({ page, request }) => {
+    const movies = data.search
+
+    const movieNames = movies.data.map(m => `'${m.title}'`).join()
+    await executeSQL(`DELETE FROM movies WHERE title IN(${movieNames})`)
+    
+    movies.data.forEach(async (m) => {
+        await request.api.postMovie(m)
+    })
+
+    await page.login.do('admin@zombieplus.com', 'pwd123', 'Admin')
+    await page.movies.search(movies.input)
+
+    movies.outputs.forEach(async (output) => {
+        await page.movies.tableHave(output)
+    })
+
+    await page.movies.tableNotHave(movies.shouldNotReturn)
+})
